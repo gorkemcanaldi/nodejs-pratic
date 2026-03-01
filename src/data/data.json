@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "isim": "gorkem",
+    "puan": 70,
+    "ders": "biyoloji"
+  },
+  {
+    "id": 2,
+    "isim": "mehmet",
+    "puan": 50,
+    "ders": "fizik"
+  }
+]

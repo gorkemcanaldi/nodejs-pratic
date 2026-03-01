@@ -1,0 +1,28 @@
+                            FRONTEND
+
+User Interaction (Kullanıcı Etkileşimi): Butonlara tıklamak, form doldurmak, menü açmak gibi işlemler.
+
+API Consumption: Backend’den gelen verileri almak (örneğin ürün listesi).
+
+Logic in the Client: Tarayıcıda çalışan küçük mantıklar (form doğrulama, filtreleme).
+
+Web Interface: Görsel arayüz (HTML, CSS, JavaScript).
+
+Teknolojiler: Angular, Vue.js, JavaScript → bunlar arayüzü geliştirmek için kullanılan framework ve diller.
+
+                            BACKEND
+
+
+Databases: Verilerin saklandığı yer (MySQL, MongoDB).
+
+Security: Kullanıcı girişleri, şifreleme, yetkilendirme.
+
+Performance: Uygulamanın hızlı ve verimli çalışması.
+
+Microservices: Uygulamanın küçük bağımsız servisler halinde bölünmesi.
+
+Logic on the Server: İş kuralları, hesaplamalar, veri işleme.
+
+Program API: Frontend’in konuştuğu kapı. Backend bu API’yi sağlar.
+
+Teknolojiler: Python, PHP, Node.js → sunucu tarafında çalışan diller.
