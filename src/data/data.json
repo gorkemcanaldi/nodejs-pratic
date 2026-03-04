@@ -10,5 +10,17 @@
     "isim": "mehmet",
     "puan": 50,
     "ders": "fizik"
+  },
+  {
+    "id": 3,
+    "isim": "ahmet",
+    "puan": 30,
+    "ders": "matematik"
+  },
+  {
+    "id": 4,
+    "isim": "ali",
+    "puan": 40,
+    "ders": "matematik"
   }
 ]

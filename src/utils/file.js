@@ -13,7 +13,7 @@ import fs from 'node:fs/promises';
 
 const DATABASE = 'src/data/data.json';
 
-async function dosyaOku() {
+export async function dosyaOku() {
   try {
     const data = await fs.readFile(DATABASE, 'utf-8');
     return JSON.parse(data);
@@ -25,7 +25,7 @@ async function dosyaOku() {
 
 dosyaOku();
 
-async function ogrenciEkle(yeniogrenci) {
+export async function ogrenciEkle(yeniogrenci) {
   try {
     await fs.writeFile(DATABASE, JSON.stringify(yeniogrenci, null, 2));
   } catch (error) {
@@ -46,4 +46,4 @@ async function main() {
   await ogrenciEkle(tümOgrenciler);
 }
 
-main();
+// main();
