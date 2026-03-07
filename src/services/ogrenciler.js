@@ -10,4 +10,37 @@ const getOgrenci = async (id) => {
   return data;
 };
 
-export { getOgrenciler, getOgrenci };
+const ogrenciOlustur = async (ogrenci) => {
+  const data = await Ogrenciler.create(ogrenci);
+  return data;
+};
+
+const ogrenciSil = async (ogrenciId) => {
+  //  const silinenOgrenci = await Ogrenciler.findByIdAndDelete(id);
+  const silinenOgrenci = await Ogrenciler.findOneAndDelete({ _id: ogrenciId });
+  console.log(silinenOgrenci);
+  return silinenOgrenci;
+};
+
+const ogrenciGuncelle = async (id, data, opt = {}) => {
+  const sonuc = await Ogrenciler.findOneAndUpdate({ _id: id }, data, {
+    new: true,
+    includeResultMetadata: true,
+    ...opt,
+  });
+  if (sonuc.value) {
+    return {
+      ogrenci: sonuc.value,
+      yenimi: Boolean(sonuc.lastErrorObject.upserted),
+    };
+  }
+  return null;
+};
+
+export {
+  getOgrenciler,
+  getOgrenci,
+  ogrenciOlustur,
+  ogrenciSil,
+  ogrenciGuncelle,
+};

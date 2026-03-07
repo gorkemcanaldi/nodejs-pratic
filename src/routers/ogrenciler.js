@@ -3,12 +3,26 @@ import { Router } from 'express';
 import {
   getOgrenciController,
   getOgrenciListController,
+  ogrenciOlusturController,
+  ogrenciGuncelleController,
+  ogrenciOlusturGuncelleController,
+  ogrenciSilController,
 } from '../controllers/ogrenciler.js';
 import { controllerWrapper } from '../utils/controllerWrapper.js';
 
 const ogrenciRouter = Router();
 
 ogrenciRouter.get('/', controllerWrapper(getOgrenciListController));
+ogrenciRouter.post('/', controllerWrapper(ogrenciOlusturController));
+ogrenciRouter.delete('/:ogrenciId', controllerWrapper(ogrenciSilController));
+ogrenciRouter.put(
+  '/:ogrenciId',
+  controllerWrapper(ogrenciOlusturGuncelleController),
+);
+ogrenciRouter.patch(
+  '/:ogrenciId',
+  controllerWrapper(ogrenciGuncelleController),
+);
 
 ogrenciRouter.get('/:ogrenciId', getOgrenciController);
 

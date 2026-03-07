@@ -25,7 +25,11 @@ export const createServer = () => {
     }),
   ); */
 
-  app.use(express.json());
+  app.use(
+    express.json({
+      limit: '1mb',
+    }),
+  );
 
   app.get('/', (req, res) => {
     res.send('AnaSayfa');
