@@ -22,5 +22,11 @@
     "isim": "ali",
     "puan": 40,
     "ders": "matematik"
+  },
+  {
+    "id": 5,
+    "isim": "ali",
+    "puan": 40,
+    "ders": "matematik"
   }
 ]
