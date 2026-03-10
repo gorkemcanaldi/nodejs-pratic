@@ -9,22 +9,38 @@ import {
   ogrenciSilController,
 } from '../controllers/ogrenciler.js';
 import { controllerWrapper } from '../utils/controllerWrapper.js';
+import { validateBody } from '../middlewares/validatorBody.js';
+import {
+  ogrenciEkleSchema,
+  ogrenciGuncelleSchema,
+} from '../validators/ogrenciler.js';
+import { isValidId } from '../middlewares/isValidId.js';
 
 const ogrenciRouter = Router();
 
 ogrenciRouter.get('/', controllerWrapper(getOgrenciListController));
-ogrenciRouter.post('/', controllerWrapper(ogrenciOlusturController));
-ogrenciRouter.delete('/:ogrenciId', controllerWrapper(ogrenciSilController));
+ogrenciRouter.get('/:ogrenciId', isValidId, getOgrenciController);
+
+ogrenciRouter.post(
+  '/',
+  validateBody(ogrenciEkleSchema),
+  controllerWrapper(ogrenciOlusturController),
+);
+ogrenciRouter.delete(
+  '/:ogrenciId',
+  isValidId,
+  controllerWrapper(ogrenciSilController),
+);
 ogrenciRouter.put(
   '/:ogrenciId',
   controllerWrapper(ogrenciOlusturGuncelleController),
 );
 ogrenciRouter.patch(
   '/:ogrenciId',
+  isValidId,
+  validateBody(ogrenciGuncelleSchema),
   controllerWrapper(ogrenciGuncelleController),
 );
-
-ogrenciRouter.get('/:ogrenciId', getOgrenciController);
 
 export default ogrenciRouter;
 

@@ -17,13 +17,12 @@ const getOgrenciListController = async (req, res) => {
 };
 
 const getOgrenciController = async (req, res) => {
-  const ogrenciId = req.params.ogrenciId;
+  const { ogrenciId } = req.params;
+
   const data = await getOgrenci(ogrenciId);
+
   if (!data) {
-    throw createHttpError({
-      message: 'ogrenci bulunamadı',
-      status: 404,
-    });
+    throw createHttpError(404, 'ogrenci bulunamadı');
   }
 
   res.status(200).send({
@@ -34,6 +33,7 @@ const getOgrenciController = async (req, res) => {
 
 const ogrenciOlusturController = async (req, res) => {
   const gelenData = req.body;
+
   const data = await ogrenciOlustur(gelenData);
 
   res.status(201).send({
@@ -53,7 +53,7 @@ const ogrenciSilController = async (req, res) => {
 };
 
 const ogrenciOlusturGuncelleController = async (req, res) => {
-  const ogrenciId = req.params.ogrenciId;
+  const { ogrenciId } = req.params;
   const ogrenciData = req.body;
 
   const guncelleData = await ogrenciGuncelle(ogrenciId, ogrenciData, {
@@ -61,7 +61,7 @@ const ogrenciOlusturGuncelleController = async (req, res) => {
   });
   if (!guncelleData) {
     throw createHttpError({
-      message: 'hata olustu',
+      message: 'oğrenci bulunamadı',
     });
   }
 
@@ -77,12 +77,10 @@ const ogrenciOlusturGuncelleController = async (req, res) => {
 };
 
 const ogrenciGuncelleController = async (req, res) => {
-  const ogrenciId = req.params.ogrenciId;
+  const { ogrenciId } = req.params;
   const ogrenciData = req.body;
 
-  const guncelleData = await ogrenciGuncelle(ogrenciId, ogrenciData, {
-    upsert: false,
-  });
+  const guncelleData = await ogrenciGuncelle(ogrenciId, ogrenciData);
   if (!guncelleData) {
     throw createHttpError({
       message: 'hata olustu',
