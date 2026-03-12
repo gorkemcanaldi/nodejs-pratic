@@ -6,9 +6,13 @@ import {
   ogrenciOlustur,
   ogrenciSil,
 } from '../services/ogrenciler.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 const getOgrenciListController = async (req, res) => {
-  const data = await getOgrenciler();
+  const queryParams = req.query;
+  const { page, perPage } = parsePaginationParams(queryParams);
+
+  const data = await getOgrenciler(page, perPage);
   res.status(200).send({
     message: 'tüm öğrencilerin listesi',
     length: data.length,

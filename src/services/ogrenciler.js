@@ -1,8 +1,21 @@
+import { DEFAULT_PAGINATION_VALUES } from '../constants/pagination.js';
 import Ogrenciler from '../db/models/ogrenciler.js';
+import { calculatePagination } from '../utils/calculatePagination.js';
 
-const getOgrenciler = async () => {
-  const data = await Ogrenciler.find();
-  return data;
+const getOgrenciler = async (
+  page = DEFAULT_PAGINATION_VALUES.page,
+  perPage = DEFAULT_PAGINATION_VALUES.perPage,
+) => {
+  const skip = (page - 1) * perPage;
+  const limit = perPage;
+  const data = await Ogrenciler.find().skip(skip).limit(limit);
+  const totalData = await Ogrenciler.countDocuments();
+  const pagination = calculatePagination(totalData, page, perPage);
+
+  return {
+    data,
+    pagination,
+  };
 };
 
 const getOgrenci = async (id) => {
