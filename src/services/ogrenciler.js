@@ -5,11 +5,32 @@ import { calculatePagination } from '../utils/calculatePagination.js';
 const getOgrenciler = async (
   page = DEFAULT_PAGINATION_VALUES.page,
   perPage = DEFAULT_PAGINATION_VALUES.perPage,
+  sortBy = DEFAULT_PAGINATION_VALUES.sortBy,
+  sortOrder = DEFAULT_PAGINATION_VALUES.sortOrder,
+  filter = {},
 ) => {
   const skip = (page - 1) * perPage;
   const limit = perPage;
-  const data = await Ogrenciler.find().skip(skip).limit(limit);
-  const totalData = await Ogrenciler.countDocuments();
+  const ogrenciQuery = Ogrenciler.find();
+
+  if (filter.gender) {
+    ogrenciQuery.where('gender').eq(filter.gender);
+  }
+
+  if (filter.minAge) {
+    ogrenciQuery.where('age').gte(filter.minAge);
+  }
+  if (filter.maxAge) {
+    ogrenciQuery.where('age').lte(filter.maxAge);
+  }
+  const totalData = await Ogrenciler.countDocuments(ogrenciQuery.getQuery());
+
+  const data = await ogrenciQuery
+    .skip(skip)
+    .limit(limit)
+    .sort({ [sortBy]: sortOrder })
+    .exec();
+
   const pagination = calculatePagination(totalData, page, perPage);
 
   return {
