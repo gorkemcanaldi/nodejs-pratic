@@ -4,6 +4,8 @@ import cors from 'cors';
 import ogrenciRouter from './routers/ogrenciler.js';
 import { notPageHandler } from './middlewares/notPageHandler.js';
 import { errorHandler } from './middlewares/ErrorHnadler.js';
+import AuthRouter from './routers/auth.js';
+import cookieParser from 'cookie-parser';
 
 export const createServer = () => {
   const PORT = process.env.PORT;
@@ -31,11 +33,15 @@ export const createServer = () => {
     }),
   );
 
+  app.use(cookieParser());
+
   app.get('/', (req, res) => {
     res.send('AnaSayfa');
   });
 
   app.use('/ogrenciler', ogrenciRouter);
+
+  app.use('/auth', AuthRouter);
 
   app.use(notPageHandler);
 
