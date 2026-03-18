@@ -24,7 +24,13 @@ const ogrenciSchema = new Schema(
       required: true,
       default: false,
     },
+    parentId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Users',
+      required: true,
+    },
   },
+
   {
     timestamps: true,
     versionKey: false,

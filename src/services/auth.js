@@ -50,4 +50,39 @@ const loginUser = async (userData) => {
   return sesionData;
 };
 
-export { registerUser, loginUser };
+const logoutUser = async (sessionId) => {
+  await sessionsCollection.findByIdAndDelete(sessionId);
+};
+
+const refreshUser = async (refreshToken, sessionId) => {
+  const session = await sessionsCollection.findById(sessionId);
+  if (!session) {
+    throw createHttpError(404, 'oturum bulunamadı');
+  }
+  if (session.refreshToken !== refreshToken) {
+    throw createHttpError(401, 'refresh token geçersiz');
+  }
+  if (session.refreshTokenValidUntil < Date.now()) {
+    throw createHttpError(400, 'refresh token süresi bitmiş');
+  }
+
+  const accessTokenNew = randomBytes(30).toString('base64');
+  const refreshTokenNew = randomBytes(30).toString('base64');
+
+  const accessTokenValidUntilNew = new Date(Date.now() + ACCESS_TOKEN_TIME);
+  const refreshTokenValidUntilNew = new Date(Date.now() + REFRESH_TOKEN_TIME);
+
+  const sessionData = await sessionsCollection.create({
+    userId: session.userId,
+    accessToken: accessTokenNew,
+    refreshToken: refreshTokenNew,
+    accessTokenValidUntil: accessTokenValidUntilNew,
+    refreshTokenValidUntil: refreshTokenValidUntilNew,
+  });
+
+  await sessionsCollection.findByIdAndDelete(sessionId);
+
+  return sessionData;
+};
+
+export { registerUser, loginUser, logoutUser, refreshUser };

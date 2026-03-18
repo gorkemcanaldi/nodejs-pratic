@@ -14,6 +14,7 @@ export const ogrenciEkleSchema = joi.object({
   }),
   avgMark: joi.number().min(2).max(12).required(),
   onDuty: joi.boolean().required(),
+  parentId: joi.string().required(),
 });
 
 export const ogrenciGuncelleSchema = joi.object({

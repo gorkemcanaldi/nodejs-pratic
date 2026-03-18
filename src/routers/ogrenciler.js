@@ -15,14 +15,28 @@ import {
   ogrenciGuncelleSchema,
 } from '../validators/ogrenciler.js';
 import { isValidId } from '../middlewares/isValidId.js';
+import { authorization } from '../middlewares/authorization.js';
+import { checkRoles } from '../middlewares/checkRoles.js';
+import { USER_ROLES } from '../constants/index.js';
 
 const ogrenciRouter = Router();
+ogrenciRouter.use(authorization);
 
-ogrenciRouter.get('/', controllerWrapper(getOgrenciListController));
-ogrenciRouter.get('/:ogrenciId', isValidId, getOgrenciController);
+ogrenciRouter.get(
+  '/',
+  checkRoles(USER_ROLES.TEACHER),
+  controllerWrapper(getOgrenciListController),
+);
+ogrenciRouter.get(
+  '/:ogrenciId',
+  checkRoles(USER_ROLES.PARENT),
+  isValidId,
+  getOgrenciController,
+);
 
 ogrenciRouter.post(
   '/',
+  checkRoles(USER_ROLES.TEACHER),
   validateBody(ogrenciEkleSchema),
   controllerWrapper(ogrenciOlusturController),
 );
